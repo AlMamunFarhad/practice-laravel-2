@@ -5,15 +5,25 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
+use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
+
+    public function __construct(){
+
+    $this->middleware('auth');
+
+    }
+
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $tasks = $request->user()->tasks;
+        // dd($tasks);
+        return view('tasks.index', compact('tasks'));
     }
 
     /**
@@ -21,7 +31,7 @@ class TaskController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -29,7 +39,29 @@ class TaskController extends Controller
      */
     public function store(StoreTaskRequest $request)
     {
-        //
+        $task = new Task;
+        $task->name = $request->name;
+        $request->user()->tasks()->save($task);
+
+        return redirect()->back();
+
+    
+        // dd($request->user()->tasks());
+
+        // $request->user()->tasks()->create([
+         
+        //  'name' => $request->name,
+
+        // ]);
+
+
+        
+        // return redirect()->back();
+
+
+
+
+
     }
 
     /**
