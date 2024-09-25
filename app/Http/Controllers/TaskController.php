@@ -6,6 +6,8 @@ use App\Models\Task;
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Gate;
 
 class TaskController extends Controller
 {
@@ -59,9 +61,6 @@ class TaskController extends Controller
         // return redirect()->back();
 
 
-
-
-
     }
 
     /**
@@ -93,6 +92,15 @@ class TaskController extends Controller
      */
     public function destroy(Task $task)
     {
-        //
+        // if ($request->user()->can('destroy', $task)) {
+        //     $task->delete();
+        //     return redirect()->back();
+        // }else{
+        //     abort(401);
+        // }
+
+        // Gate::authorize('delete', $task);
+        $task->delete();
+        return redirect()->back();
     }
 }

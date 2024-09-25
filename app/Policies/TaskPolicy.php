@@ -6,6 +6,7 @@ use App\Models\Task;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
+
 class TaskPolicy
 {
     /**
@@ -13,7 +14,7 @@ class TaskPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -45,7 +46,8 @@ class TaskPolicy
      */
     public function delete(User $user, Task $task): bool
     {
-        //
+       
+        return $user->id === $task->user_id;
     }
 
     /**

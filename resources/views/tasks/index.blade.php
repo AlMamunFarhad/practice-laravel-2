@@ -13,7 +13,6 @@
 
   <!-- card -->
 <div class="d-flex justify-content-center py-4">
-  {{-- <div class="col-md-6"> --}}
   <div class="card-body border card">
    <div>
       <h5>Form</h5>
@@ -34,30 +33,45 @@
      </div>
     </form>
    </div>
-  {{-- </div> --}}
 </div>
-<div class="row">
-    <div class="card p-4">
-   <table class="table table-hover">         
-    <thead>
-    <tr>
-      <th scope="col">ID</th>
-      <th scope="col">Name</th>
-      <th scope="col">Created Date</th>
-    </tr>
-  </thead>
-  <tbody>
-    @if($tasks->count())
-    @foreach($tasks as $task)
+{{--     <div class="row">
+      <div class="card p-4">
+          @if($tasks->count())
+       <table class="table table-hover">         
+        <thead>
         <tr>
-          <th scope="row">{{$task->id}}</th>
-          <td>{{$task->name}}</td>
-          <td>{{$task->created_at->diffForHumans()}}</td>
+          <th scope="col">ID</th>
+          <th scope="col">Name</th>
+          <th scope="col">Created Date</th>
+          <th class="col">Delete</th>
         </tr>
-    @endforeach
-    @endif
-   </tbody>
-   </table>
-   </div>
-</div>
+      </thead>
+     <tbody>
+     @foreach($tasks as $task)
+            <tr>
+              <th scope="row">{{$task->id}}</th>
+              <td>{{$task->name}}</td>
+              <td>{{$task->created_at->diffForHumans()}}</td>
+              <td>
+              <form action="{{route('tasks.destroy', $task->id)}}" method="post">
+                 @csrf
+                 @method('DELETE')
+                  <button type="submit" class="btn btn-danger">Delete</button>
+              </form>
+              </td>
+            </tr>
+        @endforeach
+       </tbody>
+      </table>
+      @else
+     
+     <h1 class="text-center">No Record Found</h1>
+
+      @endif
+     </div>
+    </div> --}}
+      {{-- component view  --}}
+    <div class="row">
+        <x-tasks.index :tasks="$tasks"></x-tasks.index>
+    </div>
 @endsection
